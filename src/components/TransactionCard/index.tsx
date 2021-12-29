@@ -18,26 +18,31 @@ interface Category {
   icon: string;
 }
 
-interface Props {
-  data: {
-    title: string;
-    amount: string;
-    category: Category;
-    date: string;
-  };
+export interface TransactionCardProps {
+  type: 'positive' | 'negative';
+  title: string;
+  amount: string;
+  category: Category;
+  date: string;
 }
 
-export default function TransactionCard({ data }: Props) {
-  const { title, amount, category, date } = data;
+interface Props {
+  data: TransactionCardProps
+}
+
+export function TransactionCard({ data }: Props) {
+  const { title, amount, category, date, type } = data;
   return (
     <Container>
       <Title>{title}</Title>
 
-      <Amount>{amount}</Amount>
+      <Amount type={type}>
+        {data.type === 'negative' ? '- ' + amount : amount}
+      </Amount>
 
       <Footer>
         <Category>
-          <Icon name='dollar-sign' />
+          <Icon name={category.icon} />
           <CategoryName>{category.name}</CategoryName>
         </Category>
 

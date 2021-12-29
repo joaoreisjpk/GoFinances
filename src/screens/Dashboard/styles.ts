@@ -1,7 +1,13 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { FlatList, FlatListProps } from 'react-native';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-x-helper';
+
+import { DataListProps } from '.';
 
 export const Container = styled.View`
   flex: 1;
@@ -23,11 +29,10 @@ export const UserWraper = styled.View`
 
   padding: 0 ${RFValue(24)}px;
   margin-top: ${getStatusBarHeight() + RFValue(28)}px;
-  
+
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
 `;
 
 export const UserInfo = styled.View`
@@ -71,11 +76,10 @@ export const HightlightCards = styled.ScrollView.attrs({
   contentContainerStyle: { paddingHorizontal: 24 },
 })`
   width: 100%;
-  
-  position: absolute;
-  margin-top: ${RFPercentage(20)}px
-`;
 
+  position: absolute;
+  margin-top: ${RFPercentage(20)}px;
+`;
 
 export const Transactions = styled.View`
   flex: 1;
@@ -88,6 +92,11 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular}  
 `;
 
-export const TransactionList = styled.FlatList`
-
-`;
+export const TransactionList = styled(
+  FlatList as new (props: FlatListProps<DataListProps>) => FlatList<DataListProps>
+).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: getBottomSpace(),
+  },
+})``;
